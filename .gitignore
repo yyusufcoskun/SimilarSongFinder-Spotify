@@ -1,0 +1,4 @@
+howtovenv.txt
+secret.txt
+venv/
+.env
