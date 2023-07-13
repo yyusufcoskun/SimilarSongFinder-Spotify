@@ -2,3 +2,5 @@ howtovenv.txt
 secret.txt
 venv/
 .env
+notebooks/load.ipynb
+notebooks/.cache
