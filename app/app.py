@@ -23,22 +23,15 @@ from sklearn.neighbors import NearestNeighbors
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-client_id = "85e49fdb7eb54d84a8da5609196538e7"
-client_credentials_manager = SpotifyClientCredentials(client_id=client_id)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+client_id = os.getenv("SPOTIPY_CLIENT_ID")
+client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
 
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
 
-script_path = os.path.abspath(__file__)
-
-# Construct the path to the data file relative to the script's location
-data_file_path = os.path.join(os.path.dirname(os.path.dirname(script_path)), 'data', 'spotify_data.csv')
-
-# Read the CSV file
-df = pd.read_csv(data_file_path)
+df = pd.read_csv('spotify_data.csv')
 
 
 df = df.drop(columns=['Unnamed: 0', "Unnamed: 0.1", "pos", "artist_uri", "album_uri", "duration_ms_x", "album_name", "name", "type", "id", "track_href", "analysis_url", "duration_ms_y", "time_signature", "artist_pop", "track_pop"])
-
 
 df.drop_duplicates(subset=['uri'], inplace=True)
 df.reset_index(drop=True, inplace=True)
@@ -47,6 +40,8 @@ df_num = df.select_dtypes(include = ['float64', 'int64'])
 
 numeric_cols = ['acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'loudness', 'speechiness', 'tempo', 'valence']
 categorical_cols = ['key', 'mode']
+
+
 
 # Create the preprocessing pipeline
 preprocessing_pipeline = ColumnTransformer(
@@ -62,6 +57,7 @@ num_cols_transformed = numeric_cols
 cat_cols_transformed = preprocessing_pipeline.named_transformers_['cat'].get_feature_names_out(categorical_cols)
 
 # Combine the transformed column names
+
 all_cols_transformed = num_cols_transformed + cat_cols_transformed.tolist()
 
 # Convert the processed NumPy array back to a DataFrame
