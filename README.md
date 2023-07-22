@@ -29,8 +29,7 @@ The model then returns a list of tracks that have similar audio characteristics 
 ## Local Development
 If you wish to run this project locally, you can find the code and notebooks in the GitHub repository. 
 
-The repository contains Jupyter notebooks and Python scripts for data preprocessing, model training, and deployment. You can also find instructions on how to set up the necessary environment variables and run the application.
-
+The repository contains Jupyter notebooks and Python scripts for data preprocessing, model training, and deployment.
 ## Credits
 This project was created by Yusuf Coskun. It utilizes the Spotipy library for accessing the Spotify API and Hugging Face for deployment. The model training data was collected from the Spotify API and publicly available datasets.
 
